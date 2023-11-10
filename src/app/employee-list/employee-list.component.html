@@ -5,19 +5,24 @@
 </head>
 <body>
 <div class="container-fluid">
-    <div class="header navbar-expand-sm bg-primary navbar-dark">
+    <div class="header navbar-expand-sm bg-outline-danger   navbar-dark">
+      
       <ul class="navbar-nav justify-content-between space-right2 m-4">
         <li>
-          <h3 class="text-light">LIST VIEW</h3>
+           <img src="assets/asp.png" class="mt-0 " style="height: 70px;  width: 100px;" >
         </li>
         <li>
-            <button  class="btn btn-primary" mat-raised-button (click)="openAddEmployeeDialog()">  Add Employee </button>
+          <h2 class="mt-3">List View</h2>
+        </li>
+        <li>
+            <button  class="rounded rounded-1 btn btn-outline-info text-dark   mt-3"   style="background: DodgerBlue;" mat-raised-button (click)="openAddEmployeeDialog()">  Add Employee </button>
         </li>
       </ul>
+    
     </div>
-    <div>
-      <h2>Employee List</h2>
-      <table class="table table-striped">
+    <div class=" mt-1">
+      <h2 class=" m-lg-1" style="color: DodgerBlue;"><b>Employee List</b></h2>
+      <table class="table table-striped border border-2 border-dark mt-1" >
         <thead>
           <tr>
             <th>Emp Id</th>
@@ -30,6 +35,7 @@
             <th>Emp_type</th>
             <th>B_Place</th>
             <th>Address</th>
+            <th>Edit</th>
           </tr>
         </thead>
         <tbody>
@@ -44,14 +50,97 @@
             <td>{{ employee.emp_type }}</td>
             <td>{{ employee.bp }}</td>
             <td>{{ employee.address}}</td>
+            <td><i type="button" (click)="edit (employee)" class="bi bi-pencil-square" data-bs-target="#login" data-bs-toggle="modal"></i></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div>
-      
+    
+      <div class="modal " id="login">
+        <div class="modal-dialog ">
+           <div class="modal-content" style="width: 600px;">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Employee</h4>
+      </div>
+      <div class="modal-body">
+        
+        <form [formGroup]="frmEdit" (ngSubmit)="submit()">
+         <div class="form-control">
+
+          <dt>Emp_id</dt>
+          <input type="text"  class="form-control"  formControlName="emp_id" id="emp_id" placeholder="Emp id" [(ngModel)]="employee.emp_id">
+          <div class="text-danger" *ngIf="Emp_id.touched && Emp_id.invalid">
+            <div *ngIf="email_id.errors?.['required']">id Required</div>
+        </div>
+
+          <dt >Email id</dt>
+          <input type="email"  class="form-control" formControlName="email_id" placeholder="Email id" id="email_id" [(ngModel)]="employee.email_id" >
+          <div class="text-danger" *ngIf="email_id.touched && email_id.invalid">
+            <div *ngIf="email_id.errors?.['required']">Email Required</div>
+            <div *ngIf="email_id.errors?.['email']">write in email form</div>
+         </div>
+         <dt>Mobile No</dt>
+            <input type="text" class="form-control" formControlName="mobile_no" placeholder="mobile no" id="mobile_no" [(ngModel)]="employee.mobile_no">
+            <div class="text-danger" *ngIf="Mobile.touched && Mobile.invalid">
+                    <div *ngIf="Mobile.errors?.['required']">Mobile Required</div>
+                    <div *ngIf="Mobile.errors?.['pattern']">Invalid Mobile +91 and 10 digits</div>
+                </div>
+          
+
+          
+            <dt>Department</dt>
+            <input type="text" class="form-control" formControlName="department" placeholder="Department" id="department" [(ngModel)]="employee.department">
+            <div class="text-danger" *ngIf="Deparment.touched && Deparment.invalid">
+              <div *ngIf="Deparment.errors?.['required']">Department Required</div>
+          </div>
+          
+
+          
+            <dt>Role</dt>
+            <select type="text" class="form-control dropdown" formControlName="role" placeholder="Role" [(ngModel)]="employee.role" [(ngModel)]="Role">
+              <option *ngFor="let r of Roles " [value]="r.id">
+                {{r.roles}}
+              </option>
+            </select>         
+           
+
+          
+            <dt>Organization Name</dt>
+            <select type="text" class="form-control dropdown" formControlName="org_name" placeholder="Organization" id="org_name" [(ngModel)]="employee.org_name" [(ngModel)]="Emptype">
+              <option *ngFor="let t of EmpType " [value]="t.id">{{t.type}}</option>
+            </select>
+         
+
+          
+            <dt>Employee Type</dt>
+            <select type="text" class="form-control dropdown" formControlName="emp_type" placeholder="Employee Type" id="emp_type" [(ngModel)]="employee.emp_type" [(ngModel)]="Emptype">
+              <option *ngFor="let t of EmpType " [value]="t.id">{{t.type}}</option>
+            </select>   
+          
+
+          
+            <dt>B_Place</dt>
+            <select type="text" class="form-control dropdown" formControlName="bp" id="bp" placeholder="Business place" [(ngModel)]="employee.bp" [(ngModel)]="Emptype">
+              <option *ngFor="let t of EmpType " [value]="t.id">{{t.type}}</option>
+            </select>
+          
+
+         
+            <dt>Address</dt>
+            <input type="text" class="form-control" formControlName="address" id="address" placeholder="Address" [(ngModel)]="employee.address">
+            <div class="text-danger" *ngIf="Address.touched && Address.invalid">
+              <div *ngIf="Address.errors?.['required']">Address Required</div>
+          </div>
+         </div>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button  data-bs-dismiss="modal" class="btn btn-primary" type="submit" value="submit" (click)="submit()">Save Edit</button>
+      </div>
     </div>
-  </div>
+    </div>
+    </div>
+    </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
 </body>

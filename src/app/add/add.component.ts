@@ -17,7 +17,13 @@ export class AddComponent implements OnInit {
 
   Org_name: string | null = null;
 
-  orgname: any[]=[];
+  orgname: any[]=[
+    {OrgName:'Incresol'},
+    {OrgName:'tcs'},
+    {OrgName:'wipro'},
+    {OrgName:'google'},
+    {OrgName:'ibm'}
+  ];
 
   B_Place: string | null= null;
 
@@ -27,7 +33,6 @@ Oname: any;
 
 Bplace: any;
 
-  
   employee: Employee = new Employee();
  
 Role: number | null= null;
@@ -35,6 +40,7 @@ Role: number | null= null;
   Roles: any[] = [
    {id:111, roles:'Manager' },
    {id:222, roles:'Team Lead'},
+   {id:555, roles:'Employee'},
    {id:333, roles:'Trainee'},
    {id:444, roles:'Intern'}
 ];
@@ -54,23 +60,34 @@ EmpType : any[] = [
     private dialogRef: MatDialogRef<AddComponent>,
     private fb: FormBuilder, private employeeService : EmployeeService) 
     {}
+
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+  
       public frmRegister = this.fb.group({
-        Mobile: this.fb.control('', [Validators.required, Validators.pattern(/\+91\d{10}/)]),
+        emp_id:this.fb.control('',[Validators.required]),
+        mobile_no: this.fb.control('', [Validators.required, Validators.pattern(/\d{10}/)]),
         email_id:this.fb.control('',[Validators.required, Validators.email]),
-        Deparment:this.fb.control('',[Validators.required, Validators.minLength(4)]),
+        department:this.fb.control('',[Validators.required, Validators.minLength(4)]),
+        // password:this.fb.control('',[Validators.required]),
         role:this.fb.control(''),
-        Organization:this.fb.control(''),
-        Emp:this.fb.control(''),
-        BP:this.fb.control(''),
-        Address:this.fb.control('',[Validators.required, Validators.minLength(4)])
+        org_name:this.fb.control(''),
+        emp_type:this.fb.control(''),
+        bp:this.fb.control(''),
+        address:this.fb.control('',[Validators.required, Validators.minLength(4)])
        });
       
+       get Emp_id():FormControl{
+        return this.frmRegister.get("emp_id")as FormControl;
+      }
+
        get Mobile():FormControl{
-         return this.frmRegister.get("Mobile")as FormControl;
+         return this.frmRegister.get("mobile_no")as FormControl;
        }
      
        get Deparment():FormControl{
-         return this.frmRegister.get("Deparment")as FormControl;
+         return this.frmRegister.get("department")as FormControl;
        }
      
        get role():FormControl{
@@ -82,61 +99,48 @@ EmpType : any[] = [
        }
      
        get Address():FormControl{
-         return this.frmRegister.get("Address")as FormControl;
+         return this.frmRegister.get("address")as FormControl;
        }
        
        get Emp():FormControl{
-         return this.frmRegister.get("Emp") as FormControl
+         return this.frmRegister.get("emp_type") as FormControl
        }
      
        get Organization():FormControl{
-        return this.frmRegister.get("Organization") as  FormControl;
+        return this.frmRegister.get("org_name") as  FormControl;
        }
   
        get BP():FormControl{
-        return this.frmRegister.get("BP") as FormControl;
+        return this.frmRegister.get("bp") as FormControl;
        }
 
-  ngOnInit() {
-    this.saveEmployee();
-
-    // this.employeeService.getOrgNameData().subscribe(data =>{
-    //  this.orgname = data;
-    // });
-
-
-    // this.employeeService.getBPlaceData().subscribe(data=>{
-    //   this.bplace = data;
-    // })
-  }
-  // get email(){
-  //   return this.employeeForm.get("email_id");
-  // }
+  
 
   onSaveClick() {
+    //console.log();
     if (this.frmRegister.valid) {
+      // this.employee=this.frmRegister.value;
       this.dialogRef.close(this.frmRegister.value),
       this.saveEmployee();
     }
   }
 
-  // onCancelClick(): void {
-  //   this.dialogRef.close();
-  // }
+  
 
   saveEmployee(){
-    this.employeeService.createEmployee(this.employee).subscribe( data =>{
+    this.employeeService.createEmployee(this.frmRegister.value).subscribe( data =>{
       console.log(data);
+      this.employee=data;
        },
        error => console.log(error));
   }
    
 
    
-  onsubmit(){
-    console.log(this.employee);
-    this.saveEmployee();
-  }
+  // onsubmit(){
+  //   console.log(this.employee);
+  //   this.saveEmployee();
+  // }
 
   
 }

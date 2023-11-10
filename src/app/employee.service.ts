@@ -7,7 +7,6 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class EmployeeService {
-  // private baseURL = "http://localhost:56076/api/v1"
   
   constructor(private httpclient: HttpClient  ) { }
 
@@ -15,13 +14,17 @@ export class EmployeeService {
     return this.httpclient.get<Employee[]>("http://localhost:8080/api/v1/getAll");
   }
 
-  createEmployee(employee: Employee): Observable<Object>{
-    return this.httpclient.post("http://localhost:8080/api/v1/post",employee)
+  createEmployee(employee: any): Observable<any>{
+    return this.httpclient.post<any>("http://localhost:8080/api/v1/post",employee)
   }
 
-  getEmployeeById(id :number):Observable<Employee>{
-     return this.httpclient.get<Employee>("http://localhost:8080/api/v1/get/{emp_id}");
-  }
+  // getEmployeeById(id :number):Observable<Employee>{
+  //    return this.httpclient.get<Employee>("http://localhost:8080/api/v1/get/{emp_id}");
+  // }
+
+   updateEmployees(employee:any):Observable<Employee>{
+    return this.httpclient.put<any>("http://localhost:8080/api/v1/put",employee)
+   }
 
   // getOrgNameData():Observable<string[]>{
   //   return this.httpclient.get<string[]>("http://localhost:8080/api/data/Org_name");

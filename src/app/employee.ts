@@ -1,7 +1,7 @@
 export class Employee {
     emp_id!: number;
     email_id !:string;
-    password !:string;
+   // password !:string;
     mobile_no !:number;
     department !:string;
     role !:string;
