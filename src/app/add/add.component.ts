@@ -15,24 +15,6 @@ export class AddComponent implements OnInit {
 
   close=false;
 
-  Org_name: string | null = null;
-
-  orgname: any[]=[
-    {OrgName:'Incresol'},
-    {OrgName:'tcs'},
-    {OrgName:'wipro'},
-    {OrgName:'google'},
-    {OrgName:'ibm'}
-  ];
-
-  B_Place: string | null= null;
-
-  bplace: any[]=[];
-
-Oname: any;
-
-Bplace: any;
-
   employee: Employee = new Employee();
  
 Role: number | null= null;
@@ -62,25 +44,19 @@ EmpType : any[] = [
     {}
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+   
   }
   
       public frmRegister = this.fb.group({
-        emp_id:this.fb.control('',[Validators.required]),
         mobile_no: this.fb.control('', [Validators.required, Validators.pattern(/\d{10}/)]),
         email_id:this.fb.control('',[Validators.required, Validators.email]),
         department:this.fb.control('',[Validators.required, Validators.minLength(4)]),
-        // password:this.fb.control('',[Validators.required]),
         role:this.fb.control(''),
         org_name:this.fb.control(''),
         emp_type:this.fb.control(''),
         bp:this.fb.control(''),
         address:this.fb.control('',[Validators.required, Validators.minLength(4)])
        });
-      
-       get Emp_id():FormControl{
-        return this.frmRegister.get("emp_id")as FormControl;
-      }
 
        get Mobile():FormControl{
          return this.frmRegister.get("mobile_no")as FormControl;
@@ -113,20 +89,7 @@ EmpType : any[] = [
        get BP():FormControl{
         return this.frmRegister.get("bp") as FormControl;
        }
-
   
-
-  onSaveClick() {
-    //console.log();
-    if (this.frmRegister.valid) {
-      // this.employee=this.frmRegister.value;
-      this.dialogRef.close(this.frmRegister.value),
-      this.saveEmployee();
-    }
-  }
-
-  
-
   saveEmployee(){
     this.employeeService.createEmployee(this.frmRegister.value).subscribe( data =>{
       console.log(data);
@@ -134,13 +97,16 @@ EmpType : any[] = [
        },
        error => console.log(error));
   }
-   
 
+  onSaveClick() {
+    if (this.frmRegister.valid) {
+      this.dialogRef.close(this.frmRegister.value),
+      this.saveEmployee();
+      this.refreshPage();
+    }
+  }
    
-  // onsubmit(){
-  //   console.log(this.employee);
-  //   this.saveEmployee();
-  // }
-
-  
+  refreshPage() {
+    window.location.reload();
+  }
 }

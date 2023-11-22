@@ -54,7 +54,6 @@ public frmEdit = this.fb.group({
   mobile_no: this.fb.control('', [Validators.required, Validators.pattern(/\d{10}/)]),
   email_id:this.fb.control('',[Validators.required, Validators.email]),
   department:this.fb.control('',[Validators.required, Validators.minLength(4)]),
-  // password:this.fb.control('',[Validators.required]),
   role:this.fb.control(''),
   org_name:this.fb.control(''),
   emp_type:this.fb.control(''),
@@ -117,12 +116,23 @@ submit(){
   this.employeeService.updateEmployees(this.frmEdit.value).subscribe((data: Employee)=>{
   this.employee = data;
   console.log(data);
+  this.refreshPage();
+  
   });
 }
   
-
- 
-  
+refreshPage() {
+  window.location.reload();
 }
+
+
+Delete(id:number){
+  this.employeeService.DeleteEmployee(id).subscribe((data:Employee)=>{
+  this.employee = data;
+  this.refreshPage();
+  });
+}
+}
+
 
 

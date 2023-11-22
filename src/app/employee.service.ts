@@ -7,6 +7,8 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class EmployeeService {
+
+  private baseURL= "http://localhost:8080/api/v1";
   
   constructor(private httpclient: HttpClient  ) { }
 
@@ -18,19 +20,20 @@ export class EmployeeService {
     return this.httpclient.post<any>("http://localhost:8080/api/v1/post",employee)
   }
 
-  // getEmployeeById(id :number):Observable<Employee>{
-  //    return this.httpclient.get<Employee>("http://localhost:8080/api/v1/get/{emp_id}");
-  // }
-
    updateEmployees(employee:any):Observable<Employee>{
     return this.httpclient.put<any>("http://localhost:8080/api/v1/put",employee)
    }
 
+   DeleteEmployee(id:number){
+    return this.httpclient.delete<any>(`http://localhost:8080/api/v1/Delete/${id}`)
+  }
+
   // getOrgNameData():Observable<string[]>{
-  //   return this.httpclient.get<string[]>("http://localhost:8080/api/data/Org_name");
+  //   return this.httpclient.get<string[]>("http://localhost:8080/org/getAllOrganizations");
   // }
 
   // getBPlaceData():Observable<string[]>{
-  //   return this.httpclient.get<string[]>("http://localhost:8080/api/data/B_Place");
+  //   return this.httpclient.get<string[]>("http://localhost:8080/businessplaces/findAll");
   // }
+
 }
