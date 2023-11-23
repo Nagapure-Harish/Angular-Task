@@ -64,7 +64,7 @@ public frmEdit = this.fb.group({
  edit(obj: any){
   this.frmEdit.patchValue(obj);
  }
-get Emp_id():FormControl{
+ get Emp_id():FormControl{
   return this.frmEdit.get("emp_id")as FormControl;
 }
 

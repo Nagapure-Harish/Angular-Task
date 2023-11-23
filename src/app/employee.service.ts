@@ -28,12 +28,6 @@ export class EmployeeService {
     return this.httpclient.delete<any>(`http://localhost:8080/api/v1/Delete/${id}`)
   }
 
-  // getOrgNameData():Observable<string[]>{
-  //   return this.httpclient.get<string[]>("http://localhost:8080/org/getAllOrganizations");
-  // }
-
-  // getBPlaceData():Observable<string[]>{
-  //   return this.httpclient.get<string[]>("http://localhost:8080/businessplaces/findAll");
-  // }
+ 
 
 }

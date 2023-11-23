@@ -60,7 +60,7 @@
     
       <div class="modal " id="login">
         <div class="modal-dialog ">
-           <div class="modal-content" style="width: 600px;">
+           <div class="modal-content" style="width: 550px; height: 720px;">
       <div class="modal-header">
         <h4 class="modal-title">Edit Employee</h4>
       </div>
@@ -122,10 +122,10 @@
               <div *ngIf="Address.errors?.['required']">Address Required</div>
           </div>
          </div>
+         <div class="modal-footer justify-content-center">
+          <button  data-bs-dismiss="modal" class="btn btn-primary" type="submit" value="submit" (click)="submit()">Save Edit</button>
+        </div>
         </form>
-      </div>
-      <div class="modal-footer justify-content-center">
-        <button  data-bs-dismiss="modal" class="btn btn-primary" type="submit" value="submit" (click)="submit()">Save Edit</button>
       </div>
     </div>
     </div>
