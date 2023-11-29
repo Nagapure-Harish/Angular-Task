@@ -13,6 +13,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
   
 })
 export class EmployeeListComponent  implements OnInit {
+
  
   employees :any=[];
 
@@ -104,34 +105,38 @@ get BP():FormControl{
 
   ngOnInit(): void {
    this.getEmployees();
+   let token='eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoYXJpc2hAZ21haWwuY29tIiwiaWF0IjoxNzAxMjUwODE2LCJleHAiOjE3MDEyNjg4MTZ9.3RPyrO2DLf8qpnoVUWD9doJ1iN_trpvZLvoreNqcLpDPN9GeOwwVq0lU_VarmlwvVZGew0AYe2T1oN496Xlr7g';
+    localStorage.setItem('token',token);
   }
   private getEmployees(){
     this.employeeService.getEmployeeList().subscribe(data =>{
       this.employees = data;
     });
-  
   }
 
 submit(){
   this.employeeService.updateEmployees(this.frmEdit.value).subscribe((data: Employee)=>{
   this.employee = data;
   console.log(data);
-  this.refreshPage();
+});
+  this.employeeService.getEmployeeList().subscribe(data =>{
+    this.employees = data;
   
   });
 }
-  
-refreshPage() {
-  window.location.reload();
-}
-
 
 Delete(id:number){
   this.employeeService.DeleteEmployee(id).subscribe((data:Employee)=>{
-  this.employee = data;
-  this.refreshPage();
+    console.log(data);
   });
+  this.employeeService.getEmployeeList().subscribe(data =>{
+    console.log(data);
+    this.employees = data;
+  });
+
 }
+
+
 }
 
 

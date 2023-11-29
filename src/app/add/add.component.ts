@@ -3,9 +3,7 @@ import { FormBuilder, FormGroup, Validators,ReactiveFormsModule, FormControl } f
 import { MatDialogRef } from '@angular/material/dialog';
 import { Employee } from '../employee';
 import { EmployeeService } from '../employee.service';
-import { HttpClient } from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
-import { validateVerticalPosition } from '@angular/cdk/overlay';
+import { EmployeeListComponent } from '../employee-list/employee-list.component';
 @Component({
   selector: 'app-add',
   templateUrl: './add.component.html',
@@ -35,6 +33,8 @@ EmpType : any[] = [
   {id:333, type:'Trainee'},
   {id:444, type:'Intern'}
 ];
+  employees:any=[]
+  
 
  
 
@@ -44,7 +44,9 @@ EmpType : any[] = [
     {}
 
   ngOnInit(): void {
-   
+    this.getEmployees();
+    let token='eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoYXJpc2hAZ21haWwuY29tIiwiaWF0IjoxNzAxMjUwODE2LCJleHAiOjE3MDEyNjg4MTZ9.3RPyrO2DLf8qpnoVUWD9doJ1iN_trpvZLvoreNqcLpDPN9GeOwwVq0lU_VarmlwvVZGew0AYe2T1oN496Xlr7g';
+    localStorage.setItem('token',token);
   }
   
       public frmRegister = this.fb.group({
@@ -96,17 +98,27 @@ EmpType : any[] = [
       this.employee=data;
        },
        error => console.log(error));
+       
   }
 
   onSaveClick() {
     if (this.frmRegister.valid) {
       this.dialogRef.close(this.frmRegister.value),
-      this.saveEmployee();
-      this.refreshPage();
+      this.saveEmployee(); 
+      this.employeeService.getEmployeeList().subscribe(data =>{
+        this.employees = data;
+      });
     }
+    
   }
-   
-  refreshPage() {
-    window.location.reload();
+  
+  private getEmployees(){
+    this.employeeService.getEmployeeList().subscribe(data =>{
+      this.employees = data;
+    });
+  
   }
+  
+  
+
 }
