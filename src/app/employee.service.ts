@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 })
 export class EmployeeService {
 
-  private baseURL= "http://localhost:8383/api/v1";
+  private baseURL= "http://localhost:8080/api/v1";
   
   constructor(private httpclient: HttpClient  ) { }
 
@@ -19,7 +19,7 @@ export class EmployeeService {
         'Authorization':'Bearer '+token
     })
   }
-    return this.httpclient.get<Employee[]>("http://localhost:8383/api/v1/getAll",httpOption);
+    return this.httpclient.get<Employee[]>("http://localhost:8080/api/v1/getAll",httpOption);
   }
 
   createEmployee(employee: any): Observable<any>{
@@ -29,7 +29,7 @@ export class EmployeeService {
         'Authorization':'Bearer '+token
     })
   }
-    return this.httpclient.post<any>("http://localhost:8383/api/v1/post",employee,httpOption)
+    return this.httpclient.post<any>("http://localhost:8080/api/v1/post",employee,httpOption)
   }
 
    updateEmployees(employee:any):Observable<Employee>{
@@ -39,7 +39,7 @@ export class EmployeeService {
         'Authorization':'Bearer '+token
     })
   }
-    return this.httpclient.put<any>("http://localhost:8383/api/v1/put",employee,httpOption)
+    return this.httpclient.put<any>("http://localhost:8080/api/v1/put",employee,httpOption)
    }
 
    DeleteEmployee(id:number){
@@ -49,7 +49,7 @@ export class EmployeeService {
         'Authorization':'Bearer '+token
     })
   }
-    return this.httpclient.delete<any>(`http://localhost:8383/api/v1/Delete/${id}`,httpOption)
+    return this.httpclient.delete<any>(`http://localhost:8080/api/v1/Delete/${id}`,httpOption)
   }
 
  
